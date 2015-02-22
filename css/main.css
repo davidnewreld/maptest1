@@ -1,7 +1,43 @@
-html, body, .app {
+html,
+body,
+.app {
   height: 100%;
 }
 
 #map {
   height: 100%;
+}
+
+#infolayer {
+  background: rgba(0,0,0,0.6);
+  position: absolute;
+  display: none;
+  width: 15em;
+  height: 25em;
+  top: 1em;
+  right: 1em;
+  color: #fff;
+  font-size: 0.7em;
+  padding: 1em;
+  line-height: 1em;
+}
+
+#infolayer h2,
+#infolayer h2,
+#infolayer li {
+ margin: 0.5em 0; 
+}
+
+#infolayer p {
+  display: inline-block;
+  margin: 0;
+  width: 6em;
+}
+
+#infolayer #wahlbez p {
+  width: 6em;
+}
+
+#infolayer #wahlbet p {
+  width: 9em;
 }
