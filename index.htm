@@ -2,50 +2,94 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>maptest</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/main.css">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>maptest</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/main.css">
 
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 
 </head>
 
 <body>
 
-    <div class="app">
+  <div class="app">
 
-        <div id="map"></div>
-        <div id="infolayer">
-          <h2 id="wahlbez"><p>Wahlbezirk:</p> <span></span></h2>
-          <h3 id="wahlbet"><p>Wahlbeteiligung:</p> <span></span></h3>
-          <ul id="parteien">
-            <li class="SPD"><p>SPD:</p> <span></span></li>
-            <li class="CDU"><p>CDU:</p> <span></span></li>
-            <li class="LINKE"><p>LINKE:</p> <span></span></li>
-            <li class="FDP"><p>FDP:</p> <span></span></li>
-            <li class="GRUENE"><p>GRUENE:</p> <span></span></li>
-            <li class="AFD"><p>AFD:</p> <span></span></li>
-            <li class="PIRATEN"><p>Piraten:</p> <span></span></li>
-            <li class="NPD"><p>NPD:</p> <span></span></li>
-            <li class="PARTEI"><p>Die PARTEI:</p> <span></span></li>
-            <li class="OEDP"><p>&Ouml;DP:</p> <span></span></li>
-            <li class="RENTNER"><p>Rentner:</p> <span></span></li>
-            <li class="HHBL"><p>HHBL:</p> <span></span></li>
-            <li class="LIBERALE"><p>Liberale:</p> <span></span></li>
-          </ul>
+    <div id="map"></div>
+    <nav class="mapnav-container">
+      <div class="mapnav">
+        <h1>B&uuml;rgerschaftswahl Hamburg 2015</h1>
+        <div class="control">
+        <p>Ergebnis auf der Karte zeigen f&uuml;r: </p>
+        <ul>
+          <li><a href="#spd">SPD</a>
+          </li>
+          <li><a href="#cdu">CDU</a>
+          </li>
+          <li><a href="#linke">LINKE</a>
+          </li>
+          <li><a href="#fdp" class="active">FDP</a>
+          </li>
+        </ul>
+          </div>
       </div>
-
+    </nav>
+    <div id="infolayer" class="infolayer">
+      <h2 id="wahlbez"><p>Wahlbezirk:</p> <span></span></h2>
+      <h3 id="wahlbet"><p>Wahlbeteiligung:</p> <span></span></h3>
+      <ul id="parteien">
+        <li class="SPD">
+          <p>SPD:</p> <span></span>
+        </li>
+        <li class="CDU">
+          <p>CDU:</p> <span></span>
+        </li>
+        <li class="LINKE">
+          <p>LINKE:</p> <span></span>
+        </li>
+        <li class="FDP">
+          <p>FDP:</p> <span></span>
+        </li>
+        <li class="GRUENE">
+          <p>GRUENE:</p> <span></span>
+        </li>
+        <li class="AFD">
+          <p>AFD:</p> <span></span>
+        </li>
+        <li class="PIRATEN">
+          <p>Piraten:</p> <span></span>
+        </li>
+        <li class="NPD">
+          <p>NPD:</p> <span></span>
+        </li>
+        <li class="PARTEI">
+          <p>Die PARTEI:</p> <span></span>
+        </li>
+        <li class="OEDP">
+          <p>&Ouml;DP:</p> <span></span>
+        </li>
+        <li class="RENTNER">
+          <p>Rentner:</p> <span></span>
+        </li>
+        <li class="HHBL">
+          <p>HHBL:</p> <span></span>
+        </li>
+        <li class="LIBERALE">
+          <p>Liberale:</p> <span></span>
+        </li>
+      </ul>
     </div>
 
+  </div>
 
-    <script src="js/jquery.min.js"></script>
-    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-    <script src="http://d3js.org/topojson.v1.min.js"></script>
-    <script src="src/wahllokale-hh-simp-data.topo.json"></script>
-    <script src="js/main.js"></script>
+
+  <script src="js/jquery.min.js"></script>
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+  <script src="http://d3js.org/topojson.v1.min.js"></script>
+  <script src="src/hhwahl2015.topo.json"></script>
+  <script src="js/main.js"></script>
 </body>
 
 </html>

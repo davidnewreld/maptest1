@@ -13,13 +13,24 @@ L.TopoJSON = L.GeoJSON.extend({
 });
 // Copyright (c) 2013 Ryan Clark
 
+// helper functions
+
+function round(number, n) {
+  var factor;
+  factor = Math.pow(10, n);
+  return (Math.round(number * factor) / factor);
+}
+
 // create map
 
-var map = L.map('map').setView([53.5510846, 9.99368179999999], 12);
+var map = L.map('map', {zoomControl : false}).setView([53.5510846, 9.99368179999999], 11);
 L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
-  maxZoom: 18, minZoom: 11
+  maxZoom: 18,
+  minZoom: 11
 }).addTo(map);
+
+map.addControl( L.control.zoom({position: 'bottomleft'}) );
 
 /* schönere mapbox version */
 /*L.tileLayer('http://api.tiles.mapbox.com/v4/golian.ifca0pb9/{z}/{x}/{y}.png32?access_token=pk.eyJ1IjoiZ29saWFuIiwiYSI6IjB4aWtrWUkifQ.Gkl77qEV8DM5feblzjj67g', {
@@ -49,20 +60,16 @@ var topoLayer = new L.TopoJSON();
 topoLayer.addData(wahldata);
 topoLayer.addTo(map);
 topoLayer.eachLayer(handleLayer);
+topoLayer.setStyle(style);
 
-function round(number,n){
-    var factor;
-    factor = Math.pow(10,n);
-    return(Math.round(number * factor) / factor);
-}
 function handleLayer(layer) {
-  layer.setStyle({
-    fillColor: '#fff',
-    fillOpacity: 0.5,
-    color: '#999',
-    weight: 1,
-    opacity: 0.5
-  });
+  /*  layer.setStyle({
+      fillColor: '#fff',
+      fillOpacity: 0.5,
+      color: '#999',
+      weight: 1,
+      opacity: 0.5
+    });*/
 
   layer.on({
     mouseover: enterLayer,
@@ -70,29 +77,66 @@ function handleLayer(layer) {
   });
 }
 
+var currentMousePos = {
+  x: -1,
+  y: -1
+};
+$('#map').mousemove(function (event) {
+  currentMousePos.x = event.pageX;
+  currentMousePos.y = event.pageY;
+  $info.css({
+    "top": currentMousePos.y + 25,
+    "left": currentMousePos.x + 25
+  });
+});
+
+function getColor(d) {
+  return  d < 2.5 ? 'rgb(8,29,88)' :
+          d < 5 ? 'rgb(37,52,148)' :
+          d < 7.5 ? 'rgb(34,94,168)' :
+          d < 10 ? 'rgb(29,145,192)' :
+          d < 12.5 ? 'rgb(65,182,196)' :
+          d < 15 ? 'rgb(127,205,187)' :
+          d < 17.5 ? 'rgb(199,233,180)' :
+          d < 20 ? 'rgb(237,248,177)' :
+        'rgb(255,255,217)';
+}
+
+
+function style(feature) {
+  return {
+    fillColor: getColor(feature.properties.FDP),
+    weight: 1,
+    opacity: .3,
+    color: '#333',
+    fillOpacity: 0.5
+  };
+
+}
+
+
 function enterLayer() {
-  $wahlbez.text(this.feature.id)
-  $wahlbet.text(round((this.feature.properties.WAEHLER)/(this.feature.properties.WAHLBER/100),1) + " %");
-  $SPD.text(round((this.feature.properties.SPD)/(this.feature.properties.STIMMEN/100),1) + " %");
-  $CDU.text(round((this.feature.properties.CDU)/(this.feature.properties.STIMMEN/100),1) + " %");
-  $LINKE.text(round((this.feature.properties.LINKE)/(this.feature.properties.STIMMEN/100),1) + " %");
-  $FDP.text(round((this.feature.properties.FDP)/(this.feature.properties.STIMMEN/100),1) + " %");
-  $GRUENE.text(round((this.feature.properties.GRUENE)/(this.feature.properties.STIMMEN/100),1) + " %");
-  $AFD.text(round((this.feature.properties.AFD)/(this.feature.properties.STIMMEN/100),1) + " %");
-  $PIRATEN.text(round((this.feature.properties.PIRATEN)/(this.feature.properties.STIMMEN/100),1) + " %");
-  $NPD.text(round((this.feature.properties.NPD)/(this.feature.properties.STIMMEN/100),1) + " %");
-  $PARTEI.text(round((this.feature.properties.PARTEI)/(this.feature.properties.STIMMEN/100),1) + " %");
-  $OEDP.text(round((this.feature.properties.OEDP)/(this.feature.properties.STIMMEN/100),1) + " %");
-  $RENTNER.text(round((this.feature.properties.RENTNER)/(this.feature.properties.STIMMEN/100),1) + " %");
-  $HHBL.text(round((this.feature.properties.HHBL)/(this.feature.properties.STIMMEN/100),1) + " %");
-  $LIBERALE.text(round((this.feature.properties.LIBERALE)/(this.feature.properties.STIMMEN/100),1) + " %");
-  
+  $wahlbez.text(this.feature.properties.WAHLBEZ);
+  $wahlbet.text(this.feature.properties.WAHLBET);
+  $SPD.text(this.feature.properties.SPD);
+  $CDU.text(this.feature.properties.CDU);
+  $LINKE.text(this.feature.properties.LINKE);
+  $FDP.text(this.feature.properties.FDP);
+  $GRUENE.text(this.feature.properties.GRUENE);
+  $AFD.text(this.feature.properties.AFD);
+  $PIRATEN.text(this.feature.properties.PIRATEN);
+  $NPD.text(this.feature.properties.NPD);
+  $PARTEI.text(this.feature.properties.PARTEI);
+  $OEDP.text(this.feature.properties.OEDP);
+  $RENTNER.text(this.feature.properties.RENTNER);
+  $HHBL.text(this.feature.properties.HHBL);
+  $LIBERALE.text(this.feature.properties.LIBERALE);
+
   $info.show();
 
   this.bringToFront();
   this.setStyle({
-    fillColor: '#000',
-    color: '#000 ',
+    color: '#fff ',
     weight: 2,
     opacity: 1
   });
@@ -102,9 +146,8 @@ function leaveLayer() {
   $info.hide();
   this.bringToBack();
   this.setStyle({
-    fillColor: '#fff',
-    color: '#999',
+    color: '#333',
     weight: 1,
-    opacity: .5
+    opacity: .3
   });
 }
